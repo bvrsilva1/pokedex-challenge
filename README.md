@@ -1,3 +1,5 @@
+https://www.youtube.com/watch?v=cbDxdqU0o9c&feature=youtu.be
+
 # The Challenge
 
 This repository is the source code for an incomplete, pretend "Pokédex" web app. It's a code challenge, the challenge being to finish the web app by implementing a few last minute major features in the UI and API.
