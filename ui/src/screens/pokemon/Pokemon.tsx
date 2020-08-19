@@ -1,14 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
-import { RouteComponentProps, Link } from '@reach/router'
-import { useQuery, gql } from '@apollo/client'
+import { RouteComponentProps } from '@reach/router'
 import { Container as NesContainer } from 'nes-react'
+import SearchPokemon from '../../components/SearchPokemon'
+import PokemonList from '../../components/PokemonsList'
+import PokemonFilter from '../../components/PokemonFilter'
+import './Pokemon.css'
 
 const Container = styled(NesContainer)`
   && {
     background: white;
     margin: 2rem 25%;
-
     ::after {
       z-index: unset;
       pointer-events: none;
@@ -16,61 +18,54 @@ const Container = styled(NesContainer)`
   }
 `
 
-const List = styled.ul`
-  display: inline-flex;
-  flex-direction: column;
-  align-items: flex-end;
-`
-
-const ListItem = styled.li`
-  display: inline-flex;
-  align-items: center;
-  justify-content: flex-end;
-  margin-bottom: 1rem;
-
-  > *:first-child {
-    margin-right: 1rem;
-  }
-`
-
-const POKEMON_MANY = gql`
-  query($skip: Int, $limit: Int) {
-    pokemonMany(skip: $skip, limit: $limit) {
-      id
-      name
-      num
-      img
-    }
-  }
-`
-
 const Pokemon: React.FC<RouteComponentProps & { clickLink: Function }> = ({
   clickLink,
 }) => {
-  const { loading, error, data } = useQuery(POKEMON_MANY)
-  const pokemonList:
-    | Array<{ id: string; name: string; img: string; num: string }>
-    | undefined = data?.pokemonMany
-
-  if (loading) {
-    return <p>Loading...</p>
-  }
-  if (error || !pokemonList) {
-    return <p>Error!</p>
-  }
+  const [namePokemonSearch, setNamePokemonSearch] = useState('')
+  const [typesFilter, setTypesFilter] = useState([])
+  const [weaknessFilter, setWeaknessFilter] = useState([])
+  const [showFilter, setShowFilter] = useState(false)
 
   return (
     <Container rounded>
-      <List>
-        {pokemonList.map(pokemon => (
-          <Link to={pokemon.id} onMouseDown={clickLink as any}>
-            <ListItem>
-              <img src={pokemon.img} />
-              {pokemon.name} - {pokemon.num}
-            </ListItem>
-          </Link>
-        ))}
-      </List>
+      <SearchPokemon
+        namePokemonSearch={namePokemonSearch}
+        setNamePokemonSearch={setNamePokemonSearch}
+      />
+      {showFilter ? (
+        <div>
+          <div className="filters">
+            <div className="filters__types">
+              <p>Types</p>
+              <PokemonFilter
+                filter={typesFilter}
+                setFilter={setTypesFilter}
+                showFilter={showFilter}
+              />
+            </div>
+            <div className="filters__weaknesses">
+              <p>Weaknesses</p>
+              <PokemonFilter
+                filter={weaknessFilter}
+                setFilter={setWeaknessFilter}
+                showFilter={showFilter}
+              />
+            </div>
+          </div>
+
+          <p onClick={() => setShowFilter(!showFilter)}>hide filters</p>
+        </div>
+      ) : (
+        <div>
+          <p onClick={() => setShowFilter(!showFilter)}>show filters</p>
+        </div>
+      )}
+      <PokemonList
+        namePokemonSearch={namePokemonSearch}
+        typesFilter={typesFilter}
+        weaknessFilter={weaknessFilter}
+        clickLink={clickLink}
+      />
     </Container>
   )
 }
