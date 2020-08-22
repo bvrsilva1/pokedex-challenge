@@ -76,7 +76,7 @@ const PokemonList: React.FC<PokemonsListProps> = ({
     <List>
       {pokemonList.map(pokemon => (
         <Link to={pokemon.id} onMouseDown={clickLink as any}>
-          <ListItem>
+          <ListItem data-testid="pokemons">
             <img src={pokemon.img} />
             {pokemon.name} - {pokemon.num}
           </ListItem>
@@ -87,3 +87,4 @@ const PokemonList: React.FC<PokemonsListProps> = ({
 }
 
 export default PokemonList
+export { POKEMON_MANY }

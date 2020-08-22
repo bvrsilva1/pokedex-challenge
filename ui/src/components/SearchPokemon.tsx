@@ -18,6 +18,7 @@ const SearchPokemon: React.FC<SearchPokemonProps> = ({
   return (
     <div className="search__pokemon">
       <input
+        data-testid="inputSearchPokemon"
         type="text"
         onChange={event => setNamePokemonSearch(event.target.value)}
         placeholder="Type the name of a Pokemon"

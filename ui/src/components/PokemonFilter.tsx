@@ -43,6 +43,7 @@ const PokemonFilter: React.FC<PokemonFilterProps> = ({ filter, setFilter }) => {
     <div>
       {types.map((type, index) => (
         <Checkbox
+          data-testid="checkboxFilter"
           key={index}
           label={type}
           checked={isChecked(type)}

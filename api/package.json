@@ -6,16 +6,20 @@
     "start": "yarn && tsnd -r tsconfig-paths/register src/index.ts --respawn --transpileOnly",
     "format": "prettier --write './**/*.{js,ts,md,json}'",
     "lint": "eslint './src/**/*.{js,ts}'",
-    "dev": "yarn start"
+    "dev": "yarn start",
+    "test": "jest"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/jest": "^26.0.10",
     "apollo-server": "^2.16.0",
     "fuse.js": "3.4.3",
     "graphql": "^15.3.0",
-    "lodash": "^4.17.19"
+    "jest": "^26.4.2",
+    "lodash": "^4.17.19",
+    "ts-jest": "^26.2.0"
   },
   "devDependencies": {
     "@types/lodash": "^4.14.158",
